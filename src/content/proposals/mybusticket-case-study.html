@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crelligent — Case Study: Mybusticket Nigeria</title>
+    <style>
+        :root {
+            --bg-page: #020617;
+            --bg-glass: rgba(30, 41, 59, 0.4);
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --glow-foundry: 5, 150, 105;
+            --glow-edge: 37, 99, 235;
+            --glow-enterprise: 124, 58, 237;
+            --glow-amber: 245, 158, 11;
+            --accent-foundry: #10b981;
+            --accent-edge: #3b82f6;
+            --accent-enterprise: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --font-main: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 20% 40%, rgba(var(--glow-amber), 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 60%, rgba(var(--glow-foundry), 0.06) 0%, transparent 25%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 52px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #f59e0b, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        p {
+            margin: 0 0 16px 0;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        ul {
+            color: var(--text-secondary);
+            font-size: 15px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px 120px;
+        }
+
+        section {
+            padding: 64px 0;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .nav-tag {
+            font-size: 12px;
+            color: var(--accent-amber);
+            font-weight: 600;
+            border: 1px solid rgba(var(--glow-amber), 0.3);
+            padding: 4px 14px;
+            border-radius: 99px;
+            background: rgba(var(--glow-amber), 0.08);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .nav-spacer {
+            height: 80px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .card-small {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .card-small:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .glow-foundry:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-foundry), 0.3);
+            border-color: rgba(var(--glow-foundry), 0.5);
+        }
+
+        .glow-edge:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-edge), 0.3);
+            border-color: rgba(var(--glow-edge), 0.5);
+        }
+
+        .glow-amber:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-amber), 0.3);
+            border-color: rgba(var(--glow-amber), 0.5);
+        }
+
+        .glow-enterprise:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-enterprise), 0.3);
+            border-color: rgba(var(--glow-enterprise), 0.5);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-amber {
+            background: rgba(var(--glow-amber), 0.1);
+            color: var(--accent-amber);
+            border: 1px solid rgba(var(--glow-amber), 0.2);
+        }
+
+        .badge-foundry {
+            background: rgba(var(--glow-foundry), 0.1);
+            color: var(--accent-foundry);
+            border: 1px solid rgba(var(--glow-foundry), 0.2);
+        }
+
+        .badge-edge {
+            background: rgba(var(--glow-edge), 0.1);
+            color: var(--accent-edge);
+            border: 1px solid rgba(var(--glow-edge), 0.2);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 28px 16px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .phase-block {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .phase-header {
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .phase-content {
+            padding: 20px 24px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 16px 0;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-glass);
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .header-hero {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-amber);
+            padding: 24px 32px;
+            margin: 32px 0;
+            background: rgba(var(--glow-amber), 0.04);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .quote-block p {
+            font-size: 18px;
+            font-style: italic;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .quote-block .attribution {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: normal;
+        }
+
+        .confidential {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-glass);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-logo">CRELLIGENT</div>
+            <div class="nav-tag">Case Study</div>
+        </div>
+    </nav>
+    <div class="nav-spacer"></div>
+
+    <div class="container">
+
+        <!-- Hero -->
+        <header class="header-hero">
+            <span class="badge badge-amber" style="margin-bottom: 20px;">Foundry — Mobility Tech</span>
+            <h1>Mybusticket Nigeria</h1>
+            <p class="tagline">How Crelligent engineered a complete mobility platform to digitize Nigeria's ₦2.5
+                trillion interstate bus industry — from system blueprint to market launch.</p>
+        </header>
+
+        <!-- The Client -->
+        <section>
+            <h2>01 — The Client</h2>
+            <h3>Who Is Mybusticket?</h3>
+
+            <div class="card" style="border-left: 4px solid var(--accent-amber);">
+                <p style="font-size: 18px; color: #fff;">
+                    Mybusticket Nigeria Ltd is a high-growth mobility-tech startup positioned to become the
+                    <strong>primary aggregator and booking engine</strong> for Nigeria's interstate bus industry.
+                </p>
+                <p>
+                    In a market where 61% of freight and passenger movement occurs by road, the company is transitioning
+                    the traditional "park-and-wait" culture into a seamless, mobile-first experience. Through a
+                    proprietary mobile application, commuters access real-time seat selection, secure digital payments,
+                    and verified travel security — while bus operators gain ERP tools to optimize fleet utilization.
+                </p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="number" style="color: var(--accent-amber);">61%</span>
+                    <span class="label">Of movement by road</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: var(--accent-foundry);">200M+</span>
+                    <span class="label">Population served</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: var(--accent-edge);">&lt;5%</span>
+                    <span class="label">Digitally booked</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: var(--accent-enterprise);">₦2.5T</span>
+                    <span class="label">Market size</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Problem -->
+        <section>
+            <h2>02 — The Challenge</h2>
+            <h3>A Broken System, Not a Missing App</h3>
+
+            <p>Mybusticket didn't need a "booking app." Nigeria's interstate bus market is a <strong>complete system
+                    failure</strong> — fragmented across hundreds of independent operators, thousands of unregulated
+                parks, and millions of cash transactions with zero digital infrastructure.</p>
+
+            <div class="card-grid">
+                <div class="card-small glow-amber">
+                    <h4>Information Vacuum</h4>
+                    <p>Commuters arrive at parks with zero visibility into schedules, seat availability, or pricing. The
+                        average wait is 2–4 hours.</p>
+                </div>
+                <div class="card-small glow-amber">
+                    <h4>Zero Trust Infrastructure</h4>
+                    <p>No verified driver profiles, no vehicle safety records, no digital trail. Passengers board buses
+                        with strangers and hope for the best.</p>
+                </div>
+                <div class="card-small glow-enterprise">
+                    <h4>Cash Dependence</h4>
+                    <p>95%+ of transactions are cash-based. Revenue leakage from agent skimming, ghost passengers, and
+                        unrecorded fares is systemic.</p>
+                </div>
+                <div class="card-small glow-enterprise">
+                    <h4>Operator Blindness</h4>
+                    <p>Bus operators have zero fleet intelligence — no real-time utilization data, no demand
+                        forecasting, no route optimization. Paper manifests still dominate.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p>"The problem wasn't technology. The problem was that the entire interstate bus ecosystem had no
+                    system architecture at all. It was entropy in motion."</p>
+                <span class="attribution">— Crelligent Engineering Assessment</span>
+            </div>
+        </section>
+
+        <!-- The Approach -->
+        <section>
+            <h2>03 — The Approach</h2>
+            <h3>All 9 Capabilities. One Integrated System.</h3>
+
+            <p>This wasn't an "app build." Crelligent deployed every capability in its arsenal to architect, engineer,
+                and launch a complete operating system for Nigeria's road transport market.</p>
+
+            <div class="phase-block"
+                style="background: rgba(var(--glow-amber), 0.05); border-color: rgba(var(--glow-amber), 0.2);">
+                <div class="phase-header" style="color: var(--accent-amber);">
+                    Phase 1 — Define: The System Blueprint
+                    <span class="badge badge-amber">Weeks 1–4</span>
+                </div>
+                <div class="phase-content">
+                    <p><strong>Capabilities:</strong> Business Design • Product Strategy • Economics & Value Engineering
+                    </p>
+                    <ul>
+                        <li><strong>Business Design:</strong> Mapped the complete stakeholder ecosystem — commuters,
+                            park operators, fleet owners, drivers, agents, regulators. Defined system boundaries and
+                            failure modes.</li>
+                        <li><strong>Product Strategy:</strong> Identified the "Steel Thread" — the minimum viable
+                            transaction loop: Search → Select Seat → Pay Digitally → Board with QR Code. Everything else
+                            was deferred.</li>
+                        <li><strong>Economics:</strong> Engineered the revenue model — per-ticket booking fee, operator
+                            subscription tiers, and dynamic pricing engine. Modeled the path to break-even within 18
+                            months of launch.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="phase-block"
+                style="background: rgba(var(--glow-edge), 0.05); border-color: rgba(var(--glow-edge), 0.2);">
+                <div class="phase-header" style="color: var(--accent-edge);">
+                    Phase 2 — Build: The Platform
+                    <span class="badge badge-edge">Weeks 5–16</span>
+                </div>
+                <div class="phase-content">
+                    <p><strong>Capabilities:</strong> CX / Service Design • Operating Model • Technology & Platforms</p>
+                    <ul>
+                        <li><strong>CX / Service Design:</strong> Designed the end-to-end commuter journey for
+                            first-time smartphone users on low-bandwidth networks. Every interaction was optimized for
+                            speed, clarity, and trust.</li>
+                        <li><strong>Operating Model:</strong> Built the agent onboarding workflow, operator enrollment
+                            pipeline, dispute resolution SOP, and customer support playbook. Defined team structure and
+                            real-time KPI dashboards.</li>
+                        <li><strong>Technology:</strong> Built the full stack — React Native mobile app (iOS/Android),
+                            Next.js operator dashboard, Supabase backend, Paystack/Flutterwave payment integration, and
+                            real-time seat management engine.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="phase-block"
+                style="background: rgba(var(--glow-foundry), 0.05); border-color: rgba(var(--glow-foundry), 0.2);">
+                <div class="phase-header" style="color: var(--accent-foundry);">
+                    Phase 3 — Launch & Sustain: Go Live
+                    <span class="badge badge-foundry">Weeks 17–24</span>
+                </div>
+                <div class="phase-content">
+                    <p><strong>Capabilities:</strong> Data & Intelligence • Governance & Risk • Change & Behavior</p>
+                    <ul>
+                        <li><strong>Data & Intelligence:</strong> Instrumented the platform for real-time analytics —
+                            route demand heatmaps, peak-hour pricing signals, passenger movement patterns, and fleet
+                            utilization scores.</li>
+                        <li><strong>Governance & Risk:</strong> Implemented verified driver/vehicle profiles, passenger
+                            safety protocols (trip-sharing with emergency contacts), FRSC regulatory reporting, and
+                            payment reconciliation controls.</li>
+                        <li><strong>Change & Behavior:</strong> Designed the adoption strategy — agent incentive
+                            programs, commuter referral systems, park-by-park onboarding campaigns to migrate from cash
+                            to digital.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Built -->
+        <section>
+            <h2>04 — What We Delivered</h2>
+            <h3>The Complete Mybusticket System</h3>
+
+            <div class="card-grid">
+                <div class="card-small glow-amber">
+                    <span class="badge badge-amber" style="width: fit-content;">Commuter Layer</span>
+                    <h4 style="margin-top: 12px;">Mobile Booking App</h4>
+                    <p>iOS & Android app with real-time seat selection, secure payments, QR ticketing, trip-sharing, and
+                        driver/vehicle verification.</p>
+                </div>
+                <div class="card-small glow-edge">
+                    <span class="badge badge-edge" style="width: fit-content;">Operator Layer</span>
+                    <h4 style="margin-top: 12px;">Fleet ERP Dashboard</h4>
+                    <p>Operator-facing dashboard for fleet management, seat inventory, revenue reporting, route
+                        analytics, and agent oversight.</p>
+                </div>
+                <div class="card-small glow-enterprise">
+                    <span class="badge"
+                        style="width: fit-content; background: rgba(var(--glow-enterprise), 0.1); color: var(--accent-enterprise); border: 1px solid rgba(var(--glow-enterprise), 0.2);">Operations
+                        Layer</span>
+                    <h4 style="margin-top: 12px;">Admin Control Panel</h4>
+                    <p>Internal operations dashboard for Mybusticket team — user management, dispute resolution, payment
+                        reconciliation, and platform KPIs.</p>
+                </div>
+                <div class="card-small glow-foundry">
+                    <span class="badge badge-foundry" style="width: fit-content;">Intelligence Layer</span>
+                    <h4 style="margin-top: 12px;">Analytics Engine</h4>
+                    <p>Route demand heatmaps, peak-hour pricing signals, fleet utilization scoring, and predictive
+                        passenger movement models.</p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px;">
+                <h4>Full Deliverable Inventory</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px;">
+                    <div>
+                        <ul>
+                            <li>System Architecture Blueprint</li>
+                            <li>MVP Specification Document</li>
+                            <li>Financial Model & Unit Economics</li>
+                            <li>Investor-Ready Pitch Deck</li>
+                            <li>Mobile App (iOS + Android)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>Operator ERP Dashboard</li>
+                            <li>Admin Operations Panel</li>
+                            <li>Analytics & Intelligence Layer</li>
+                            <li>Standard Operating Procedures</li>
+                            <li>Full Source Code & Documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The 9 Capabilities Table -->
+        <section>
+            <h2>05 — Capability Map</h2>
+            <h3>How Every Capability Was Applied</h3>
+
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <table style="margin: 0;">
+                    <thead>
+                        <tr style="background: rgba(255,255,255,0.05);">
+                            <th style="width: 25%;">Capability</th>
+                            <th style="width: 45%;">What We Did</th>
+                            <th style="width: 30%;">Critical Question</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color: var(--accent-amber);"><strong>1. Business Design</strong></td>
+                            <td>Mapped the complete ecosystem: B2C, B2B, agent layer, regulatory interfaces. Defined
+                                system boundaries and value streams.</td>
+                            <td><em>"Is this structurally viable?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-amber);"><strong>2. Product Strategy</strong></td>
+                            <td>Identified the Steel Thread MVP. Prioritized Search → Select → Pay → Board over all
+                                secondary features.</td>
+                            <td><em>"What do we build first?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-amber);"><strong>3. Economics & Value</strong></td>
+                            <td>Engineered booking fees, subscription tiers, dynamic pricing, and commission structures.
+                                Modeled break-even at 18 months.</td>
+                            <td><em>"Does the math work at scale?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-edge);"><strong>4. CX / Service Design</strong></td>
+                            <td>Designed for low-bandwidth, first-time smartphone users. Every screen under 3 taps.
+                                Trust signals on every booking.</td>
+                            <td><em>"Is this friction-free?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-edge);"><strong>5. Operating Model</strong></td>
+                            <td>Created agent onboarding workflow, operator enrollment pipeline, dispute resolution
+                                SOPs, and team KPI dashboards.</td>
+                            <td><em>"Can it run without the founder?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-edge);"><strong>6. Technology</strong></td>
+                            <td>React Native mobile app, Next.js dashboards, Supabase backend, payment integrations,
+                                real-time seat engine.</td>
+                            <td><em>"Does it scale to 1M bookings?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-foundry);"><strong>7. Data & Intelligence</strong></td>
+                            <td>Route demand heatmaps, utilization scoring, peak-hour pricing, and predictive passenger
+                                flow models.</td>
+                            <td><em>"Can it predict demand?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-foundry);"><strong>8. Governance & Risk</strong></td>
+                            <td>Verified driver/vehicle profiles, trip-sharing safety, FRSC compliance reporting,
+                                payment reconciliation.</td>
+                            <td><em>"Is every journey safe?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--accent-foundry);"><strong>9. Change & Behavior</strong></td>
+                            <td>Park-by-park adoption campaign. Agent incentive programs. Commuter referral loops.
+                                Cash-to-digital migration.</td>
+                            <td><em>"Will they actually switch?"</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- The Lesson -->
+        <section style="border-bottom: none;">
+            <h2>06 — The Lesson</h2>
+            <h3>Why Systems Thinking Won</h3>
+
+            <div class="card" style="border-left: 4px solid var(--accent-foundry);">
+                <p style="font-size: 18px; color: #fff; margin-bottom: 16px;">
+                    A "booking app" would have failed. Mybusticket needed a complete <strong>operating system</strong> —
+                    one that connected commuters, operators, agents, and regulators into a single, observable,
+                    economically viable machine.
+                </p>
+                <p>
+                    By deploying all 9 capabilities as an integrated system, Crelligent didn't just build technology —
+                    we engineered the structural foundation for an entirely new category of mobility infrastructure in
+                    Africa's largest economy.
+                </p>
+                <p style="margin-bottom: 0;">
+                    <strong style="color: #fff;">This is what Crelligent does. We don't fix parts. We engineer whole
+                        systems.</strong>
+                </p>
+            </div>
+
+            <div class="quote-block" style="margin-top: 40px;">
+                <p>"Most consultants would have built us a booking app. Crelligent built us an operating system for
+                    Nigeria's road transport industry."</p>
+                <span class="attribution">— Mybusticket Founder</span>
+            </div>
+        </section>
+
+        <div class="confidential">
+            © 2026 Crelligent & Co. &nbsp;•&nbsp; All Rights Reserved. &nbsp;•&nbsp; Case Study — Foundry Engagement
+        </div>
+    </div>
+</body>
+
+</html>

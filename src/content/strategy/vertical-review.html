@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crelligent — Vertical Review</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --card: #111111;
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #e0e0e0;
+            --muted: #888;
+            --dim: #555;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --amber: #f59e0b;
+            --red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            padding: 3rem 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .doc-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .doc-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 200;
+            font-size: 2.8rem;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-meta {
+            font-size: 0.8rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Section */
+        .vertical-section {
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .vertical-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .label-green {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .label-blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--blue);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .label-amber {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 span {
+            color: var(--dim);
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.05rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 2.5rem 0 1rem;
+        }
+
+        /* Identity Grid */
+        .identity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .identity-item {
+            padding: 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface);
+        }
+
+        .identity-item .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--dim);
+            margin-bottom: 0.4rem;
+        }
+
+        .identity-item .value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 2rem;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--dim);
+            font-weight: 500;
+        }
+
+        td {
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0 2rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface);
+        }
+
+        .card .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .card .card-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .card .card-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Strength/Gap Lists */
+        .point-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 2rem;
+        }
+
+        .point-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .point-list li:last-child {
+            border-bottom: none;
+        }
+
+        .icon-check {
+            color: var(--green);
+            font-size: 1rem;
+        }
+
+        .icon-warn {
+            color: var(--amber);
+            font-size: 1rem;
+        }
+
+        .icon-x {
+            color: var(--red);
+            font-size: 1rem;
+        }
+
+        /* Readiness Badge */
+        .readiness {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin: 1rem 0;
+        }
+
+        .ready-green {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .ready-yellow {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+        }
+
+        .ready-orange {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+
+        .readiness-note {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+
+        .comparison-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Priority Actions */
+        .action-block {
+            padding: 1.5rem;
+            border-left: 2px solid var(--blue);
+            background: var(--surface);
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .action-block .action-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-block .action-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .action-block.urgent {
+            border-left-color: var(--amber);
+        }
+
+        .action-block.later {
+            border-left-color: var(--dim);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .doc-header h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .identity-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="doc-header">
+            <h1>Vertical Review</h1>
+            <div class="doc-meta">Crelligent &mdash; February 16, 2026 &nbsp;|&nbsp; Honest review of all 3 service
+                verticals</div>
+        </div>
+
+        <!-- ========== FOUNDRY ========== -->
+        <div class="vertical-section">
+            <div class="vertical-label label-green">&#9679; Foundry &mdash; Startup-as-a-Service</div>
+            <h2>Crelligent Foundry</h2>
+            <p class="subtitle">We engineer startups as adaptive business systems &mdash; not just products &mdash; so
+                they validate faster, scale smarter, and survive longer.</p>
+
+            <div class="identity-grid">
+                <div class="identity-item">
+                    <div class="label">Tagline</div>
+                    <div class="value">Startup-as-a-Service</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Platform</div>
+                    <div class="value">VeloDesk (PMF Score&trade;)</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Target</div>
+                    <div class="value">Founders wanting systems</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Accent</div>
+                    <div class="value" style="color: #22c55e;">Green</div>
+                </div>
+            </div>
+
+            <h3>System Components</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number">Layer 1</div>
+                    <div class="card-title">System Architecture</div>
+                    <div class="card-desc">Business model, product strategy, and operating model designed as one
+                        integrated system.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 2</div>
+                    <div class="card-title">Execution Engine</div>
+                    <div class="card-desc">Processes, technology, and data infrastructure that actually runs the
+                        startup.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 3</div>
+                    <div class="card-title">Learning Loops</div>
+                    <div class="card-desc">Customer feedback, analytics, and iteration cycles built into operations.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 4</div>
+                    <div class="card-title">Control Mechanisms</div>
+                    <div class="card-desc">Governance, economics, and risk frameworks for stability during growth.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 5</div>
+                    <div class="card-title">Activation Layer</div>
+                    <div class="card-desc">Adoption, behavior, and culture that turns systems into living organizations.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Pricing</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Stage</th>
+                        <th>Price</th>
+                        <th>Duration</th>
+                        <th>Key Deliverables</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Starter</td>
+                        <td>Idea / Concept</td>
+                        <td>From $5,000</td>
+                        <td>4 weeks</td>
+                        <td>PMF Assessment, MVP Blueprint, System Intent Mapping, VeloDesk</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--green);">Growth &star;</td>
+                        <td>Seed / Early Traction</td>
+                        <td>From $15,000</td>
+                        <td>8 weeks</td>
+                        <td>Full System Architecture, CX Design, Data Setup, Operating Model, GTM</td>
+                    </tr>
+                    <tr>
+                        <td>Scale</td>
+                        <td>Post-Seed / Series A+</td>
+                        <td>From $30,000</td>
+                        <td>12 weeks</td>
+                        <td>Scale Architecture, ML Insights, Failure Mode Analysis, Investor Readiness, BI Suite</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Differentiator</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Typical Startup Support</th>
+                        <th>Crelligent Foundry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Incubators & accelerators</td>
+                        <td style="color: var(--green);">Systems engineering</td>
+                    </tr>
+                    <tr>
+                        <td>Mentorship-heavy</td>
+                        <td style="color: var(--green);">Design & build-heavy</td>
+                    </tr>
+                    <tr>
+                        <td>Advice and frameworks</td>
+                        <td style="color: var(--green);">Executable systems</td>
+                    </tr>
+                    <tr>
+                        <td>Focus on pitch decks</td>
+                        <td style="color: var(--green);">Focus on operating reality</td>
+                    </tr>
+                    <tr>
+                        <td>Fragmented vendors</td>
+                        <td style="color: var(--green);">Integrated system</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Strengths</h3>
+            <ul class="point-list">
+                <li><span class="icon-check">&#10003;</span> Most developed vertical &mdash; clear methodology, pricing,
+                    differentiation</li>
+                <li><span class="icon-check">&#10003;</span> Anti-positioning is sharp &mdash; explicitly not an
+                    accelerator</li>
+                <li><span class="icon-check">&#10003;</span> VeloDesk integration creates tangible product tie-in</li>
+                <li><span class="icon-check">&#10003;</span> Pricing is defined and tiered &mdash; rare for a services
+                    firm at this stage</li>
+                <li><span class="icon-check">&#10003;</span> Target audience is clear &mdash; founders who want systems
+                </li>
+            </ul>
+
+            <h3>Gaps</h3>
+            <ul class="point-list">
+                <li><span class="icon-warn">&#9888;</span> No case studies &mdash; prospects can't see proof</li>
+                <li><span class="icon-warn">&#9888;</span> No discovery call flow &mdash; CTA goes to generic /contact
+                </li>
+                <li><span class="icon-warn">&#9888;</span> No mention of the 9 capabilities from the master strategy
+                </li>
+                <li><span class="icon-warn">&#9888;</span> VeloDesk isn't live &mdash; integration claim is aspirational
+                </li>
+                <li><span class="icon-warn">&#9888;</span> No visual timeline for engagement process</li>
+            </ul>
+
+            <div class="readiness ready-green">&#9679; Ready for First Client</div>
+            <p class="readiness-note">Foundry is the most complete vertical. A founder landing on this page would
+                understand what they're buying. Only missing proof (case studies) and a live VeloDesk.</p>
+        </div>
+
+        <!-- ========== EDGE ========== -->
+        <div class="vertical-section">
+            <div class="vertical-label label-blue">&#9679; Intelligence Systems &mdash; IoT &amp; Embedded Systems</div>
+            <h2>Crelligent Intelligence Systems</h2>
+            <p class="subtitle">From silicon to insight &mdash; IoT, firmware, edge computing, and cloud analytics as
+                one complete system.</p>
+
+            <div class="identity-grid">
+                <div class="identity-item">
+                    <div class="label">Tagline</div>
+                    <div class="value">Silicon to Insight</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Platform</div>
+                    <div class="value">MarketPulse (Consumer Signals)</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Target</div>
+                    <div class="value">Orgs needing full-stack IoT</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Accent</div>
+                    <div class="value" style="color: #3b82f6;">Blue</div>
+                </div>
+            </div>
+
+            <h3>The Complete IoT Stack</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number">Layer 1 &mdash; Device</div>
+                    <div class="card-title">Hardware & Firmware</div>
+                    <div class="card-desc">Sensors, microcontrollers, firmware development, edge processing.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 2 &mdash; Connect</div>
+                    <div class="card-title">Connectivity & Edge</div>
+                    <div class="card-desc">5G, LPWAN, satellite, MQTT/CoAP protocols, edge compute.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 3 &mdash; Cloud</div>
+                    <div class="card-title">Cloud Integration</div>
+                    <div class="card-desc">Data ingestion, storage, pipelines, API connectivity.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Layer 4 &mdash; Insight</div>
+                    <div class="card-title">Analytics & Reporting</div>
+                    <div class="card-desc">Dashboards, ML/AI, anomaly detection, decision intelligence.</div>
+                </div>
+            </div>
+
+            <h3>Capabilities</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Edge AI / TinyML</td>
+                        <td>On-device intelligence with real-time inference &mdash; no cloud dependency</td>
+                    </tr>
+                    <tr>
+                        <td>RISC-V & Custom SoCs</td>
+                        <td>Open architecture for cost control and hardware sovereignty</td>
+                    </tr>
+                    <tr>
+                        <td>Battery-Free Platforms</td>
+                        <td>Energy harvesting &mdash; devices that never need charging</td>
+                    </tr>
+                    <tr>
+                        <td>Security-by-Design</td>
+                        <td>Hardware-level zero-trust, post-quantum cryptography</td>
+                    </tr>
+                    <tr>
+                        <td>Software-Defined Hardware</td>
+                        <td>Firmware orchestrating workloads across heterogeneous SoCs</td>
+                    </tr>
+                    <tr>
+                        <td>Fleet Management & OTA</td>
+                        <td>Over-the-air updates, telemetry, predictive maintenance at scale</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Systems Approach</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number" style="color: #3b82f6;">Phase 1 &mdash; Define</div>
+                    <div class="card-title">System Intent</div>
+                    <div class="card-desc">Purpose, boundaries, and failure modes before firmware.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number" style="color: #8b5cf6;">Phase 2 &mdash; Build</div>
+                    <div class="card-title">Integrated Engineering</div>
+                    <div class="card-desc">Hardware, firmware, connectivity, cloud as one system.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number" style="color: #22c55e;">Phase 3 &mdash; Sustain</div>
+                    <div class="card-title">Operational Intelligence</div>
+                    <div class="card-desc">OTA updates, telemetry, predictive maintenance. A living fleet.</div>
+                </div>
+            </div>
+
+            <h3>Use Cases</h3>
+            <ul class="point-list">
+                <li><span class="icon-check">&#10003;</span> Industrial IoT &mdash; Predictive maintenance, asset
+                    tracking</li>
+                <li><span class="icon-check">&#10003;</span> Healthcare &mdash; Remote patient monitoring, wearables
+                </li>
+                <li><span class="icon-check">&#10003;</span> Smart Buildings &mdash; Energy management, occupancy
+                    sensing</li>
+                <li><span class="icon-check">&#10003;</span> Agriculture &mdash; Soil/climate monitoring, automated
+                    irrigation</li>
+                <li><span class="icon-check">&#10003;</span> Logistics &mdash; Fleet tracking, cold chain monitoring
+                </li>
+            </ul>
+
+            <h3>Strengths</h3>
+            <ul class="point-list">
+                <li><span class="icon-check">&#10003;</span> Highly differentiated &mdash; very few firms in Africa can
+                    claim full-stack IoT</li>
+                <li><span class="icon-check">&#10003;</span> Technical depth is impressive &mdash; RISC-V, TinyML,
+                    battery-free, post-quantum</li>
+                <li><span class="icon-check">&#10003;</span> Systems thinking applied to hardware &mdash; Define, Build,
+                    Sustain</li>
+                <li><span class="icon-check">&#10003;</span> Use cases are concrete &mdash; not vague, real industry
+                    applications</li>
+            </ul>
+
+            <h3>Gaps</h3>
+            <ul class="point-list">
+                <li><span class="icon-warn">&#9888;</span> No pricing &mdash; prospects don't know budget range</li>
+                <li><span class="icon-warn">&#9888;</span> No engagement model &mdash; unlike Foundry, no tiers defined
+                </li>
+                <li><span class="icon-warn">&#9888;</span> Claims are ambitious &mdash; RISC-V, custom SoCs,
+                    post-quantum crypto require deep hardware expertise</li>
+                <li><span class="icon-warn">&#9888;</span> No reference projects &mdash; zero proof of capability</li>
+                <li><span class="icon-warn">&#9888;</span> MarketPulse tie-in is weak &mdash; consumer sentiment doesn't
+                    clearly serve IoT</li>
+                <li><span class="icon-warn">&#9888;</span> No process timeline &mdash; phases defined but no durations
+                </li>
+            </ul>
+
+            <div class="readiness ready-yellow">&#9679; Needs Work Before First Client</div>
+            <p class="readiness-note">Edge looks impressive but the gap between claims (RISC-V, custom SoCs) and solo
+                delivery capacity is significant. Focus on the software side of IoT first (firmware, cloud, dashboards)
+                and add hardware when you have specialist freelancers or partners.</p>
+        </div>
+
+        <!-- ========== ENTERPRISE ========== -->
+        <div class="vertical-section">
+            <div class="vertical-label label-amber">&#9679; Enterprise &mdash; ESRE&trade;</div>
+            <h2>Crelligent Enterprise</h2>
+            <p class="subtitle">Rebuilding Foundations at Scale &mdash; for organizations that have outgrown their
+                systems or never had the right ones.</p>
+
+            <div class="identity-grid">
+                <div class="identity-item">
+                    <div class="label">Tagline</div>
+                    <div class="value">Rebuilding Foundations</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Platform</div>
+                    <div class="value">BI Suite (SAI Score)</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Target</div>
+                    <div class="value">Orgs that outgrew their systems</div>
+                </div>
+                <div class="identity-item">
+                    <div class="label">Accent</div>
+                    <div class="value" style="color: #3b82f6;">Blue (needs change)</div>
+                </div>
+            </div>
+
+            <h3>Core Services</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">System Re-Architecture</div>
+                    <div class="card-desc">Redesigning systems that accumulated technical and operational debt.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Platform & Operating Model Redesign</div>
+                    <div class="card-desc">Aligning tech platforms with business operating models &mdash; not the other
+                        way around.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Pre-Scale Stabilization</div>
+                    <div class="card-desc">Preparing systems for growth before complexity exposes their weaknesses.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">System Alignment Assessment</div>
+                    <div class="card-desc">Evaluating how well current systems support organizational goals and where
+                        gaps exist.</div>
+                </div>
+            </div>
+
+            <h3>Engagement Process</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number">Step 01</div>
+                    <div class="card-title">Discovery</div>
+                    <div class="card-desc">Understanding current systems, pain points, and goals.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Step 02</div>
+                    <div class="card-title">Assessment</div>
+                    <div class="card-desc">Mapping systems, identifying gaps, measuring alignment.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Step 03</div>
+                    <div class="card-title">Architecture</div>
+                    <div class="card-desc">Designing the target state.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Step 04</div>
+                    <div class="card-title">Roadmap</div>
+                    <div class="card-desc">Phased plan with clear milestones.</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">Step 05</div>
+                    <div class="card-title">Implementation</div>
+                    <div class="card-desc">Working alongside your team to deliver.</div>
+                </div>
+            </div>
+
+            <h3>Strengths</h3>
+            <ul class="point-list">
+                <li><span class="icon-check">&#10003;</span> SAI (System Alignment Index) is a genuinely original
+                    concept</li>
+                <li><span class="icon-check">&#10003;</span> Clean positioning &mdash; "not another consultant" is the
+                    right message</li>
+                <li><span class="icon-check">&#10003;</span> Process is clear and professional &mdash; 5-step engagement
+                    flow</li>
+                <li><span class="icon-check">&#10003;</span> BI Suite integration gives product-backed credibility</li>
+            </ul>
+
+            <h3>Gaps</h3>
+            <ul class="point-list">
+                <li><span class="icon-x">&#10007;</span> Page is the lightest &mdash; 166 lines vs Foundry's 311</li>
+                <li><span class="icon-x">&#10007;</span> ESRE&trade; isn't on the page &mdash; the core framework is
+                    missing entirely</li>
+                <li><span class="icon-x">&#10007;</span> No pricing or engagement tiers &mdash; prospects can't
+                    self-qualify</li>
+                <li><span class="icon-x">&#10007;</span> No industry targeting &mdash; "Enterprise" is too broad</li>
+                <li><span class="icon-x">&#10007;</span> No differentiator table &mdash; unlike Foundry, no "us vs.
+                    them"</li>
+                <li><span class="icon-x">&#10007;</span> Same accent color as Edge &mdash; no visual distinction</li>
+            </ul>
+
+            <div class="readiness ready-orange">&#9679; Needs Significant Improvement</div>
+            <p class="readiness-note">Enterprise is the least developed page. The SAI concept and BI Suite are strong
+                foundations, but the page doesn't communicate ESRE&trade;, doesn't show pricing, and doesn't
+                differentiate from traditional consultants. This is the vertical with the highest average deal size
+                &mdash; it deserves the deepest page.</p>
+        </div>
+
+        <!-- ========== COMPARISON ========== -->
+        <div class="comparison-section">
+            <h2>Cross-Vertical Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th style="color: var(--green);">Foundry</th>
+                        <th style="color: var(--blue);">Edge</th>
+                        <th style="color: var(--amber);">Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Page Depth</td>
+                        <td>311 lines</td>
+                        <td>246 lines</td>
+                        <td>166 lines</td>
+                    </tr>
+                    <tr>
+                        <td>Pricing Defined</td>
+                        <td style="color: var(--green);">&#10003; 3 tiers</td>
+                        <td style="color: var(--red);">&#10007;</td>
+                        <td style="color: var(--red);">&#10007;</td>
+                    </tr>
+                    <tr>
+                        <td>Methodology Named</td>
+                        <td style="color: var(--green);">&#10003; 5 components</td>
+                        <td style="color: var(--green);">&#10003; 3 phases</td>
+                        <td style="color: var(--red);">&#10007; ESRE&trade; missing</td>
+                    </tr>
+                    <tr>
+                        <td>Differentiator Table</td>
+                        <td style="color: var(--green);">&#10003; vs. accelerators</td>
+                        <td style="color: var(--red);">&#10007;</td>
+                        <td style="color: var(--red);">&#10007;</td>
+                    </tr>
+                    <tr>
+                        <td>Target Audience</td>
+                        <td style="color: var(--green);">&#10003; Clear</td>
+                        <td style="color: var(--amber);">&#9888; Broad</td>
+                        <td style="color: var(--red);">&#10007; Too vague</td>
+                    </tr>
+                    <tr>
+                        <td>Platform Tie-In</td>
+                        <td style="color: var(--green);">&#10003; VeloDesk</td>
+                        <td style="color: var(--amber);">&#9888; MarketPulse (weak)</td>
+                        <td style="color: var(--green);">&#10003; BI Suite</td>
+                    </tr>
+                    <tr>
+                        <td>Use Cases</td>
+                        <td style="color: var(--green);">&#10003; 4 types</td>
+                        <td style="color: var(--green);">&#10003; 5 industries</td>
+                        <td style="color: var(--red);">&#10007; None listed</td>
+                    </tr>
+                    <tr>
+                        <td>Ready for Sales</td>
+                        <td style="color: var(--green);">&#9679; Yes</td>
+                        <td style="color: var(--amber);">&#9679; Partially</td>
+                        <td style="color: var(--red);">&#9679; Needs rework</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ========== PRIORITY ACTIONS ========== -->
+        <h2 style="margin-bottom: 1.5rem;">Priority Actions</h2>
+
+        <h3>Immediate (This Week)</h3>
+        <div class="action-block urgent">
+            <div class="action-title">1. Fix The Enterprise Page</div>
+            <div class="action-desc">Add ESRE&trade; methodology, pricing tiers (Diagnostic $5K&ndash;$10K, Targeted
+                $15K&ndash;$30K, Full Program $50K+), industry targeting, differentiator table.</div>
+        </div>
+        <div class="action-block urgent">
+            <div class="action-title">2. Add Pricing to Edge</div>
+            <div class="action-desc">Define pilot pricing and engagement tiers. Scope to what can actually be delivered
+                now.</div>
+        </div>
+
+        <h3>Before First Client</h3>
+        <div class="action-block">
+            <div class="action-title">3. Vertical-Specific Intake Forms</div>
+            <div class="action-desc">Replace generic /contact with discovery forms tailored to each vertical.</div>
+        </div>
+        <div class="action-block">
+            <div class="action-title">4. Visual Engagement Timeline</div>
+            <div class="action-desc">Add a visual week-by-week breakdown to Foundry's engagement model.</div>
+        </div>
+
+        <h3>After First Client</h3>
+        <div class="action-block later">
+            <div class="action-title">5. Case Studies</div>
+            <div class="action-desc">Document whichever vertical lands the first deal as a portfolio piece.</div>
+        </div>
+        <div class="action-block later">
+            <div class="action-title">6. Testimonials Section</div>
+            <div class="action-desc">Add a testimonials/social proof section to each vertical page.</div>
+        </div>
+
+    </div>
+</body>
+
+</html>

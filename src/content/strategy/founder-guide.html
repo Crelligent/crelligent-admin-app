@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crelligent — Founder's Reference Guide</title>
+    <style>
+        :root {
+            /* Dark Glass Palette */
+            --bg-page: #020617;
+            /* Slate 950 */
+            --bg-glass: rgba(30, 41, 59, 0.4);
+            /* Slate 800 - 40% */
+            --bg-card: rgba(15, 23, 42, 0.6);
+            /* Slate 900 - 60% */
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+
+            --text-primary: #f8fafc;
+            /* Slate 50 */
+            --text-secondary: #94a3b8;
+            /* Slate 400 */
+            --text-muted: #64748b;
+            /* Slate 500 */
+
+            /* Neon Accents (Glows) */
+            --glow-foundry: 5, 150, 105;
+            /* Emerald 600 */
+            --glow-edge: 37, 99, 235;
+            /* Blue 600 */
+            --glow-enterprise: 124, 58, 237;
+            /* Violet 600 */
+
+            --accent-foundry: #10b981;
+            --accent-edge: #3b82f6;
+            --accent-enterprise: #8b5cf6;
+
+            --font-main: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(var(--glow-enterprise), 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(var(--glow-edge), 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        p {
+            margin: 0 0 16px 0;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px 120px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-tag {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            border: 1px solid var(--border-glass);
+            padding: 4px 12px;
+            border-radius: 99px;
+        }
+
+        .nav-spacer {
+            height: 80px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .card-small {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .card-small:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .glow-foundry:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-foundry), 0.3);
+            border-color: rgba(var(--glow-foundry), 0.5);
+        }
+
+        .glow-edge:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-edge), 0.3);
+            border-color: rgba(var(--glow-edge), 0.5);
+        }
+
+        .glow-enterprise:hover {
+            box-shadow: 0 0 30px -10px rgba(var(--glow-enterprise), 0.3);
+            border-color: rgba(var(--glow-enterprise), 0.5);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid transparent;
+        }
+
+        .badge-foundry {
+            background: rgba(var(--glow-foundry), 0.1);
+            color: var(--accent-foundry);
+            border-color: rgba(var(--glow-foundry), 0.2);
+        }
+
+        .badge-edge {
+            background: rgba(var(--glow-edge), 0.1);
+            color: var(--accent-edge);
+            border-color: rgba(var(--glow-edge), 0.2);
+        }
+
+        .badge-enterprise {
+            background: rgba(var(--glow-enterprise), 0.1);
+            color: var(--accent-enterprise);
+            border-color: rgba(var(--glow-enterprise), 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 16px 0;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 16px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        td {
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--border-glass);
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .phase-block {
+            margin-bottom: 24px;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .phase-header {
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .phase-content {
+            padding: 24px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .text-foundry {
+            color: var(--accent-foundry);
+        }
+
+        .text-edge {
+            color: var(--accent-edge);
+        }
+
+        .text-enterprise {
+            color: var(--accent-enterprise);
+        }
+
+        .header-hero {
+            text-align: center;
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at center, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+        }
+
+        .tagline {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* THE SPHERE LOGO */
+        .logo-svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 32px;
+            filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.6));
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <svg class="logo-svg" style="width:32px; height:32px; margin-bottom:0;" viewBox="0 0 100 100"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="50" fill="url(#paint0_linear)" />
+                    <path
+                        d="M50 0C77.6142 0 100 22.3858 100 50C100 77.6142 77.6142 100 50 100C22.3858 100 0 77.6142 0 50C0 22.3858 22.3858 0 50 0ZM50 10C27.9086 10 10 27.9086 10 50C10 72.0914 27.9086 90 50 90C72.0914 90 90 72.0914 90 50C90 27.9086 72.0914 10 50 10Z"
+                        fill="url(#paint1_linear)" fill-opacity="0.5" />
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="0" y1="0" x2="100" y2="100"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#3B82F6" />
+                            <stop offset="0.5" stop-color="#8B5CF6" />
+                            <stop offset="1" stop-color="#10B981" />
+                        </linearGradient>
+                        <linearGradient id="paint1_linear" x1="100" y1="0" x2="0" y2="100"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#F43F5E" />
+                            <stop offset="1" stop-color="#8B5CF6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>CRELLIGENT</span>
+            </div>
+            <div class="nav-tag">Founder's Reference Guide</div>
+        </div>
+    </nav>
+    <div class="nav-spacer"></div>
+
+    <div class="container">
+
+        <!-- Hero -->
+        <header class="header-hero">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="48" stroke="url(#grad1)" stroke-width="2" />
+                <path d="M10 50 C 10 20, 90 20, 90 50" stroke="url(#grad2)" stroke-width="8" stroke-linecap="round"
+                    fill="none" />
+                <path d="M15 65 C 15 35, 85 35, 85 65" stroke="url(#grad3)" stroke-width="8" stroke-linecap="round"
+                    fill="none" />
+                <path d="M20 35 C 20 65, 80 65, 80 35" stroke="url(#grad4)" stroke-width="8" stroke-linecap="round"
+                    fill="none" />
+                <defs>
+                    <linearGradient id="grad1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5" />
+                        <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="grad2" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#EF4444" /> <!-- Red -->
+                        <stop offset="0.5" stop-color="#EAB308" /> <!-- Yellow -->
+                        <stop offset="1" stop-color="#10B981" /> <!-- Green -->
+                    </linearGradient>
+                    <linearGradient id="grad3" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#3B82F6" /> <!-- Blue -->
+                        <stop offset="1" stop-color="#8B5CF6" /> <!-- Violet -->
+                    </linearGradient>
+                    <linearGradient id="grad4" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#EC4899" /> <!-- Pink -->
+                        <stop offset="1" stop-color="#F97316" /> <!-- Orange -->
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <h1>Mission Critical Engineering.</h1>
+            <p class="tagline">"We don't fix part. We redesign the whole system."</p>
+        </header>
+
+        <!-- 01 Identity -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <path d="M12 2a10 10 0 0 1 10 10v0a10 10 0 0 1-10 10v0A10 10 0 0 1 2 12v0a10 10 0 0 1 10-10z" />
+                </svg> 01 — Identity</h2>
+            <h3>The Manifest</h3>
+
+            <div class="card">
+                <h4>What Is Crelligent?</h4>
+                <p style="font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 24px;">
+                    Crelligent is a <strong>Systems Design & Engineering Firm</strong>. We engineer complete business
+                    systems—strategies, software, workflows, and economics—designed to function as a single, sovereign
+                    organism.
+                </p>
+                <p>We are not an agency. Agencies rent you talent. We enable <strong>Sovereignty</strong>. We build the
+                    "Brain" of your company so you can own it.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card-small" style="grid-column: span 3;">
+                    <h4 style="color:#fff;">The Problem: "The Great Fragmentation"</h4>
+                    <p>Modern businesses fail because they are built in silos. You hire a Strategy Consultant for the
+                        "Why", a Product Manager for the "What", and a Dev Shop for the "How".</p>
+                    <p><strong>The result?</strong> Strategists design things that can't be built. Developers build
+                        things that don't sell. Data sits in databases that nobody reads.</p>
+                    <p>This fragmentation is the #1 destroyer of value.</p>
+                </div>
+
+                <div class="card-small glow-enterprise">
+                    <h4>The Antidote: Unified Design</h4>
+                    <p>We destroy the wall between the "Suit" and the "Hoodie".</p>
+                    <p><strong>Strategies are executable code.</strong><br><strong>Code is business logic.</strong></p>
+                    <p>We do not hand off work. We own the entire stack from the P&L to the Database.</p>
+                </div>
+                <div class="card-small glow-foundry">
+                    <h4>The Promise: Sovereignty</h4>
+                    <p>Most companies are held hostage by their vendors or their legacy tech.</p>
+                    <p>We build systems that liberate you. When we leave, you don't crash—you fly. We hand over the
+                        keys, the manual, and the code.</p>
+                </div>
+                <div class="card-small glow-edge">
+                    <h4>The Method: Engineering Truth</h4>
+                    <p>We don't believe in "Best Practices"—we believe in Physics.</p>
+                    <p>Does the unit economics work? Is the latency under 100ms? Is the system observable?</p>
+                    <p><strong>If it's not observable, it doesn't exist.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Philosophy -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg> 02 — Philosophy</h2>
+            <h3>The Core Beliefs</h3>
+
+            <div class="card-grid">
+                <div class="card-small">
+                    <h4>1. Systems Thinking</h4>
+                    <p>Organizations are systems. Optimization of a part often creates problems for the whole. We
+                        optimize the whole.</p>
+                </div>
+                <div class="card-small">
+                    <h4>2. Anti-Consultant</h4>
+                    <p>No 200-slide decks. No advice without execution. We build what we design. Skin in the game.</p>
+                </div>
+                <div class="card-small" style="grid-column: span 2;">
+                    <h4>3. Mission Critical Engineering</h4>
+                    <p><strong style="color:var(--accent-enterprise)">The "Day 2" Mindset.</strong> We build critical
+                        infrastructure. The Constitution:</p>
+                    <div style="margin-top:16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="background:rgba(0,0,0,0.3); padding:16px; border-radius:8px;">
+                            <strong style="color:var(--accent-edge)">Rule 1: Observability</strong><br>
+                            If it's not observable, it doesn't exist. We assume failure and build recovery from Day 0.
+                        </div>
+                        <div style="background:rgba(0,0,0,0.3); padding:16px; border-radius:8px;">
+                            <strong style="color:var(--accent-foundry)">Rule 2: Radical Simplicity</strong><br>
+                            Boring technology > Bleeding edge. We sell stability, not hype.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 Framework -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg> 03 — Framework</h2>
+
+            <h3>The Anatomy of a System</h3>
+            <div class="card" style="margin-bottom: 48px; border-left: 4px solid var(--accent-edge);">
+                <h4 style="color:var(--accent-edge)">Example: The Cognitive Logistics Network</h4>
+                <p><strong>The Goal:</strong> Zero waste in a pharmaceutical cold chain.</p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:24px;">
+                    <div>
+                        <p style="color:#fff; margin-bottom:4px;"><strong>1. The Hardware (Sensing)</strong></p>
+                        <p style="font-size:14px;">Low-power IoT sensors on every pallet broadcasting temp/humidity via
+                            LoRaWAN.</p>
+                    </div>
+                    <div>
+                        <p style="color:#fff; margin-bottom:4px;"><strong>2. The Intelligence (Thinking)</strong></p>
+                        <p style="font-size:14px;">Python models predicting spoilage based on traffic + weather data.
+                        </p>
+                    </div>
+                    <div>
+                        <p style="color:#fff; margin-bottom:4px;"><strong>3. The Workflow (Acting)</strong></p>
+                        <p style="font-size:14px;">Auto-dispatching replacement trucks via Linear/Slack integration
+                            <em>before</em> the spoilage happens.</p>
+                    </div>
+                    <div>
+                        <p style="color:#fff; margin-bottom:4px;"><strong>4. The Economics (Sustaining)</strong></p>
+                        <p style="font-size:14px;">System funded by insurance savings (Foundry Model).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>The 9 Capabilities</h3>
+            <p>The periodic table of components required to build a sovereign system.</p>
+
+            <div class="card" style="padding:0; overflow:hidden; margin-bottom:48px;">
+                <table style="margin:0;">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.05);">
+                            <th style="width:15%">Capability</th>
+                            <th style="width:15%">The Role</th>
+                            <th style="width:40%">Description</th>
+                            <th style="width:30%">The Critical Question</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- DEFINE -->
+                        <tr>
+                            <td style="color:var(--accent-edge)"><strong>1. Business Design</strong></td>
+                            <td>The Architect</td>
+                            <td>Defining the system boundaries, value streams, and failure modes.</td>
+                            <td><em>"Is this system viable?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-edge)"><strong>2. Product Strategy</strong></td>
+                            <td>The Navigator</td>
+                            <td>Roadmapping capabilities and prioritizing features based on ROI.</td>
+                            <td><em>"What do we build next?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-edge)"><strong>3. CX / Service</strong></td>
+                            <td>The Empath</td>
+                            <td>Designing the human-machine interface and emotional resonance.</td>
+                            <td><em>"Does it delight?"</em></td>
+                        </tr>
+
+                        <!-- BUILD -->
+                        <tr>
+                            <td style="color:var(--accent-enterprise)"><strong>4. Data & Intel</strong></td>
+                            <td>The Brain</td>
+                            <td>Sensing pipeline, storage, analytics, and predictive models.</td>
+                            <td><em>"Does it learn?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-enterprise)"><strong>5. Operating Model</strong></td>
+                            <td>The Engine</td>
+                            <td>The human workflows and standard operating procedures (SOPs).</td>
+                            <td><em>"Does it flow?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-enterprise)"><strong>6. Technology</strong></td>
+                            <td>The Skeleton</td>
+                            <td>The codebase, infrastructure, security, and stack.</td>
+                            <td><em>"Does it scale?"</em></td>
+                        </tr>
+
+                        <!-- SUSTAIN -->
+                        <tr>
+                            <td style="color:var(--accent-foundry)"><strong>7. Governance</strong></td>
+                            <td>The Shield</td>
+                            <td>Compliance, security protocols, and risk management.</td>
+                            <td><em>"Is it safe?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-foundry)"><strong>8. Economics</strong></td>
+                            <td>The Fuel</td>
+                            <td>Unit economics, pricing models, and cost optimization.</td>
+                            <td><em>"Is it profitable?"</em></td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent-foundry)"><strong>9. Change</strong></td>
+                            <td>The Pulse</td>
+                            <td>Cultural adoption, training, and internal evangelism.</td>
+                            <td><em>"Will they use it?"</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- THE NARRATIVE (New Section) -->
+            <h3>The Narrative: A User Story</h3>
+            <p>How the 9 Capabilities come together to save a company.</p>
+
+            <div class="card" style="border: 1px solid var(--border-hover); background: rgba(15, 23, 42, 0.8);">
+                <div style="margin-bottom: 24px;">
+                    <h4 style="color:#fff; font-size: 20px;">The Scenario: "The Black Friday Crash"</h4>
+                    <p><strong>Meet Sarah, COO of Apex Retail.</strong><br>
+                        It's Black Friday. Traffic spikes 500%. The site crashes. Inventory data is 4 hours old.
+                        Customers are buying out-of-stock items. The warehouse is packing ghosts. Sarah is flying blind.
+                    </p>
+                </div>
+
+                <div class="phase-block"
+                    style="background: rgba(var(--glow-edge), 0.05); border-color: rgba(var(--glow-edge), 0.2);">
+                    <div class="phase-header" style="color:var(--accent-edge);">1. The Diagnosis (Define)</div>
+                    <div class="phase-content" style="padding-top:0;">
+                        <ul style="margin-top:0;">
+                            <li><strong>Business Design:</strong> Sarah realizes the issue isn't "the server." It's the
+                                <em>silo</em> between Web and Warehouse. The system boundary is wrong.</li>
+                            <li><strong>Product Strategy:</strong> She decides to stop patching the old ERP. The new
+                                roadmap prioritizes a "Real-Time Inventory Mesh" over a pretty frontend.</li>
+                            <li><strong>CX / Service:</strong> She redesigns the "Out of Stock" experience. Instead of
+                                an error, the user gets a "Reserve for Next Batch" option with a discount.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="phase-block"
+                    style="background: rgba(var(--glow-enterprise), 0.05); border-color: rgba(var(--glow-enterprise), 0.2);">
+                    <div class="phase-header" style="color:var(--accent-enterprise);">2. The Intervention (Build)</div>
+                    <div class="phase-content" style="padding-top:0;">
+                        <ul style="margin-top:0;">
+                            <li><strong>Data & Intel:</strong> Crelligent implements an Event Bus (Supabase Realtime).
+                                Every purchase is a "Signal". Inventory updates in 50ms, not 4 hours.</li>
+                            <li><strong>Operating Model:</strong> The Warehouse team gets iPads running a custom "Pack
+                                App" linked to the Signal. No more paper pick-lists.</li>
+                            <li><strong>Technology:</strong> We migrate the bottlenecked monolithic SQL database to a
+                                distributed Edge Cluster (Cloudflare + Postgres).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="phase-block"
+                    style="background: rgba(var(--glow-foundry), 0.05); border-color: rgba(var(--glow-foundry), 0.2);">
+                    <div class="phase-header" style="color:var(--accent-foundry);">3. The Evolution (Sustain)</div>
+                    <div class="phase-content" style="padding-top:0;">
+                        <ul style="margin-top:0;">
+                            <li><strong>Governance:</strong> Automated "Circuit Breakers" are installed. If inventory
+                                drops below 5%, the "Buy" button auto-disables to prevent overselling.</li>
+                            <li><strong>Economics:</strong> Every delayed order used to cost Apex $15 in support calls.
+                                The new system reduces support tickets by 90%. <strong>Margins increase 12%.</strong>
+                            </li>
+                            <li><strong>Change:</strong> The warehouse staff, initially scared of the iPads, now refuse
+                                to work without them because they hit their bonuses faster.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    style="text-align:center; margin-top:24px; padding-top:24px; border-top:1px solid var(--border-glass);">
+                    <p style="margin-bottom:0; color:#fff;"><strong>The Result:</strong><br>Apex didn't just "fix the
+                        crash." They built a <em>Sovereign Nervous System</em> that turns chaos into profit.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 Business Units -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg> 04 — Business Units</h2>
+            <h3>How We're Organized</h3>
+
+            <div class="card-grid">
+                <div class="card-small glow-foundry">
+                    <span class="badge badge-foundry">Startups</span>
+                    <h4 style="margin-top: 16px;">Crelligent Foundry</h4>
+                    <p><strong>Startup-as-a-Service.</strong> We co-engineer startups for equity + cost. High risk,
+                        asymmetric reward.</p>
+                </div>
+                <div class="card-small glow-edge">
+                    <span class="badge badge-edge">Hardware</span>
+                    <h4 style="margin-top: 16px;">Crelligent Intelligence Systems</h4>
+                    <p><strong>Silicon to Insight.</strong> IoT, Embedded Systems, and Custom Hardware. Connecting the
+                        physical world.</p>
+                </div>
+                <div class="card-small glow-enterprise">
+                    <span class="badge badge-enterprise">Corporate</span>
+                    <h4 style="margin-top: 16px;">Enterprise</h4>
+                    <p><strong>System Re-Architecture.</strong> Transforming legacy monoliths into modern systems. High
+                        margin, fixed bid.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 08 Positioning -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                </svg> 08 — Positioning</h2>
+            <h3>Who We Are Not</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Them (Vendors)</th>
+                            <th>Us (Systems Partner)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>The Goal</strong></td>
+                            <td>Deliver text/code/slide.</td>
+                            <td>Deliver a self-sustaining system.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Model</strong></td>
+                            <td>Hourly billing (Efficiency tax).</td>
+                            <td>Fixed Price / Results (Value capture).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Handofff</strong></td>
+                            <td>"Here's the code, good luck."</td>
+                            <td>"Here are the keys, you act as owner."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Scope</strong></td>
+                            <td>Siloed (Marketing OR Tech).</td>
+                            <td>Holistic (Business + Tech).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 09 Case Studies -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                </svg> 09 — Case Studies</h2>
+            <div class="card-grid">
+                <div class="card-small glow-enterprise">
+                    <h4 style="color:var(--accent-enterprise)">NovaTrade</h4>
+                    <p><strong>Crisis:</strong> Ops drowning in Excel.</p>
+                    <p><strong>Fix:</strong> Control Tower BI Suite.</p>
+                    <p><strong>Result:</strong> CEO sleeps at night.</p>
+                </div>
+                <div class="card-small glow-foundry">
+                    <h4 style="color:var(--accent-foundry)">Kora Health</h4>
+                    <p><strong>Crisis:</strong> Great idea, no tech.</p>
+                    <p><strong>Fix:</strong> Steel Thread Prototype.</p>
+                    <p><strong>Result:</strong> $250k Seed Round.</p>
+                </div>
+                <div class="card-small glow-edge">
+                    <h4 style="color:var(--accent-edge)">ColdGuard</h4>
+                    <p><strong>Crisis:</strong> Vaccine spoilage.</p>
+                    <p><strong>Fix:</strong> LoRaWAN Mesh.</p>
+                    <p><strong>Result:</strong> Zero waste.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10 Financials -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                </svg> 10 — Financial Models</h2>
+            <h3>Real-World Deal Structures</h3>
+            <p>Applied economics from our Case Studies.</p>
+
+            <div class="card-grid">
+                <div class="card-small glow-enterprise">
+                    <div style="display:flex; justify-content:space-between;">
+                        <h4>NovaTrade</h4>
+                        <span class="badge badge-enterprise">$180k Total</span>
+                    </div>
+                    <p><strong>Structure: Phased Fixed Bid</strong></p>
+                    <ul style="font-size:14px; margin-top:8px;">
+                        <li><strong>Define ($30k):</strong> 4 Weeks. Blueprint.</li>
+                        <li><strong>Build ($120k):</strong> 12 Weeks. Execution.</li>
+                        <li><strong>Sustain ($30k):</strong> 4 Weeks. Handoff.</li>
+                    </ul>
+                </div>
+                <div class="card-small glow-foundry">
+                    <div style="display:flex; justify-content:space-between;">
+                        <h4>Kora Health</h4>
+                        <span class="badge badge-foundry">$15k + 7% Equity</span>
+                    </div>
+                    <p><strong>Structure: Cash-Equity Hybrid</strong></p>
+                    <ul style="font-size:14px; margin-top:8px;">
+                        <li><strong>Cash ($15k):</strong> Covers rough cost of labor.</li>
+                        <li><strong>Equity (7%):</strong> Buying the upside.</li>
+                        <li><em>Bet: 7% of $100M > $200k fee.</em></li>
+                    </ul>
+                </div>
+                <div class="card-small glow-edge">
+                    <div style="display:flex; justify-content:space-between;">
+                        <h4>ColdGuard</h4>
+                        <span class="badge badge-edge">$1M+ Contract</span>
+                    </div>
+                    <p><strong>Structure: Hardware + SaaS</strong></p>
+                    <ul style="font-size:14px; margin-top:8px;">
+                        <li><strong>Upfront:</strong> Devices sold at 40% margin.</li>
+                        <li><strong>Recurring:</strong> $25k/mo Platform Fee.</li>
+                        <li><em>The Annuity Model.</em></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11 Talking Points -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg> 11 — Talking Points</h2>
+            <h3>Selling the Value</h3>
+            <div class="card-grid">
+                <div class="card-small">
+                    <h4>1. Efficiency (The Cost Argument)</h4>
+                    <p>"You are leaking 30% of your revenue through bad processes. We plug the hole. The system pays for
+                        itself in 6 months."</p>
+                </div>
+                <div class="card-small">
+                    <h4>2. Scale (The Growth Argument)</h4>
+                    <p>"You can't 10x your revenue if you 10x your headcount. We build the engine that lets you scale
+                        revenue without scaling chaos."</p>
+                </div>
+                <div class="card-small">
+                    <h4>3. Control (The Peace Paradox)</h4>
+                    <p>"The only way to have peace of mind is to have total visibility. We give you the dashboard that
+                        lets you sleep."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12 Objections -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg> 12 — Objections</h2>
+            <h3>Handling Pushback</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30%">Objection</th>
+                            <th>The Reframe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>"You're expensive."</strong></td>
+                            <td>"We are an investment in foundations. Fixing broken systems later costs 10x more. Cheap
+                                code is the most expensive thing you can buy."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>"We just need developers."</strong></td>
+                            <td>"Developers build features. We design systems that make features valuable. Do you want
+                                code, or do you want a business result?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>"We can do this in-house."</strong></td>
+                            <td>"Is building internal systems expertise your core business? Or is selling your product?
+                                We let you focus on your customers."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 13 Launch Roadmap -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg> 13 — Launch Roadmap</h2>
+            <div class="card-grid">
+                <div class="card-small"><span class="badge badge-enterprise">Month 1</span>
+                    <h4 style="margin-top:12px">Foundation</h4>
+                    <p>Legal, Brand, Website.</p>
+                </div>
+                <div class="card-small"><span class="badge badge-enterprise">Month 2</span>
+                    <h4 style="margin-top:12px">First Engine</h4>
+                    <p>Close Client #1 ($30k).</p>
+                </div>
+                <div class="card-small"><span class="badge badge-enterprise">Month 3</span>
+                    <h4 style="margin-top:12px">First System</h4>
+                    <p>Hire Employee #1.</p>
+                </div>
+            </div>
+            <h3 style="margin-top: 48px;">The First 5 Hires</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Archetype</th>
+                            <th>Mission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Principal Architect</strong></td>
+                            <td>Tech + Cloud</td>
+                            <td>Owns delivery & code.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Product Strategist</strong></td>
+                            <td>Design + Biz</td>
+                            <td>Translates client needs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Delivery Lead</strong></td>
+                            <td>Project + Ops</td>
+                            <td>Keeps trains running.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Growth Engineer</strong></td>
+                            <td>Marketing + Auto</td>
+                            <td>Fills the funnel.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Venture Lead</strong></td>
+                            <td>Foundry + IO</td>
+                            <td>Runs the startup factory.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 14 Standard Stack -->
+        <section>
+            <h2><svg class="icon-sm" viewBox="0 0 24 24">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                </svg> 14 — Standard Stack</h2>
+            <div class="card-grid">
+                <div class="card-small">
+                    <h4>L5: Apps</h4>
+                    <ul>
+                        <li>Next.js</li>
+                        <li>Flutter</li>
+                        <li>TailwindCSS</li>
+                    </ul>
+                </div>
+                <div class="card-small">
+                    <h4>L4: Data</h4>
+                    <ul>
+                        <li>Supabase</li>
+                        <li>Postgres</li>
+                        <li>Python</li>
+                    </ul>
+                </div>
+                <div class="card-small">
+                    <h4>L2: Ops</h4>
+                    <ul>
+                        <li>Linear</li>
+                        <li>Notion</li>
+                        <li>Slack</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer
+            style="text-align: center; padding: 64px 0; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-glass);">
+            <p>Crelligent — Systems Design & Engineering</p>
+            <p>Founder's Reference Guide v3.3 (Capabilities Matrix)</p>
+        </footer>
+    </div>
+</body>
+
+</html>

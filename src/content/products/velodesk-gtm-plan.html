@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velodesk | Go-To-Market Strategy 2025</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #000000;
+            --border: #eeeeee;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0a0a0a;
+                --text-main: #f0f0f0;
+                --text-muted: #a0a0a0;
+                --accent: #ffffff;
+                --border: #222222;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding: 4rem 2rem;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 200;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 2.5rem 0 1rem;
+        }
+
+        p,
+        li {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.02);
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+        }
+
+        .template-box {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            margin: 1.5rem 0;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 6rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-print {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+            z-index: 100;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            .btn-print {
+                display: none;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="btn-print" onclick="window.print()">Export to PDF</button>
+
+    <div class="container">
+        <header>
+            <div class="logo">Velodesk Strategy Group</div>
+            <h1>The Path to $100M ARR</h1>
+            <p class="subtitle">Go-To-Market Execution Plan & Investor Landscape 2025</p>
+        </header>
+
+        <section id="executive-summary">
+            <h2>01 Executive Summary</h2>
+            <p>Velodesk is the first automated <strong>"Product-Market Fit Score"</strong> for startups. By
+                standardizing PMF into a verifiable metric (0-100), we bridge the information gap between founders and
+                capital. This document outlines the strategy to scale from $0 to $100M ARR by leveraging high-leverage
+                distribution nodes: VCs and Accelerators.</p>
+        </section>
+
+        <section id="market">
+            <h2>02 Market Opportunity</h2>
+            <ul>
+                <li><strong>The Pain Point:</strong> Founders lack objective proof of growth; VCs lack real-time
+                    visibility into portfolio health.</li>
+                <li><strong>The Solution:</strong> A data-driven score powered by 40+ integrations (Stripe, Segment,
+                    HubSpot).</li>
+                <li><strong>TAM:</strong> $50B+ global spend on startup analytical tools and fundraising software.</li>
+            </ul>
+        </section>
+
+        <section id="strategy">
+            <h2>03 GTM Phases</h2>
+            <h3>Phase 1: Brand Standard (Seed)</h3>
+            <p>Focus on getting the "Velodesk Badge" on 1,000+ top startup landing pages. This creates a viral
+                "Lighthouse Effect" where investors see the badge and ask other founders for their score.</p>
+
+            <h3>Phase 2: Distribution Nodes (Scale)</h3>
+            <p>Direct partnerships with accelerators (YC, Techstars, Antler). We provide a unified dashboard for program
+                managers in exchange for onboarding their entire batch onto our paid growth tier.</p>
+        </section>
+
+        <section id="templates">
+            <h2>04 Outreach Templates</h2>
+            <div class="template-header">Founders Outreach</div>
+            <div class="template-box">
+                Subject: Stop guessing your PMF score.
+
+                Hi [Founder Name],
+
+                Investors are tired of hearing "early traction." They want to see **The PMF Score**.
+
+                We just launched Velodesk. Connect your data, get your score, and add a "Verified PMF" badge to your
+                pitch deck.
+
+                Our users are seeing a 2x higher response rate from VCs when including their Velodesk link.
+
+                Get your score here: [Link]
+
+                Best,
+                Velodesk Team
+            </div>
+
+            <div class="template-header">VC Firm Outreach</div>
+            <div class="template-box">
+                Subject: Standardizing your pre-seed filter: Velodesk
+
+                Hi [Partner Name],
+
+                Most pitch decks claim "Product-Market Fit," but few can prove it with objective data.
+
+                We built Velodesk to help firms like [VC Name] filter incoming deal flow using our **PMF Score**. It
+                integrates directly with a startup’s Stripe, Mixpanel, and HubSpot to generate a "Velodesk Verified"
+                score.
+
+                Can I show you how our partner firms are using this to cut due diligence time by 40%?
+
+                Best,
+                [Your Name]
+            </div>
+        </section>
+
+        <section id="investors">
+            <h2>05 Top 50 Investor Targets</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Firm</th>
+                            <th>Tier</th>
+                            <th>Focus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Accel</td>
+                            <td>T1</td>
+                            <td>Global SaaS / Cloud</td>
+                        </tr>
+                        <tr>
+                            <td>Sequoia Capital</td>
+                            <td>T1</td>
+                            <td>Enterprise / Fintech</td>
+                        </tr>
+                        <tr>
+                            <td>a16z</td>
+                            <td>T1</td>
+                            <td>SaaS / Consumer</td>
+                        </tr>
+                        <tr>
+                            <td>Benchmark</td>
+                            <td>T1</td>
+                            <td>Founders First</td>
+                        </tr>
+                        <tr>
+                            <td>Forum Ventures</td>
+                            <td>SaaS</td>
+                            <td>Pre-Seed Specialist</td>
+                        </tr>
+                        <tr>
+                            <td>SaaStr Fund</td>
+                            <td>SaaS</td>
+                            <td>Revenue Focused</td>
+                        </tr>
+                        <tr>
+                            <td>Boldstart</td>
+                            <td>Seed</td>
+                            <td>DevFirst / Enterprise</td>
+                        </tr>
+                        <tr>
+                            <td>Craft Ventures</td>
+                            <td>Growth</td>
+                            <td>PMF Scaling</td>
+                        </tr>
+                        <tr>
+                            <td>First Round</td>
+                            <td>Seed</td>
+                            <td>Community Focused</td>
+                        </tr>
+                        <tr>
+                            <td>Y Combinator</td>
+                            <td>Acc.</td>
+                            <td>High Growth All Sectors</td>
+                        </tr>
+                        <tr>
+                            <td>Lightspeed</td>
+                            <td>Global</td>
+                            <td>Enterprise SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Kleiner Perkins</td>
+                            <td>T1</td>
+                            <td>Disruptive Tech</td>
+                        </tr>
+                        <tr>
+                            <td>Founders Fund</td>
+                            <td>T1</td>
+                            <td>Moonshots / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Matrix Partners</td>
+                            <td>T1</td>
+                            <td>Vertical SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>New Enterprise Associates</td>
+                            <td>T1</td>
+                            <td>All Stages</td>
+                        </tr>
+                        <tr>
+                            <td>Index Ventures</td>
+                            <td>Global</td>
+                            <td>Fintech / AI / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Greylock</td>
+                            <td>Early</td>
+                            <td>Enterprise / Crypto</td>
+                        </tr>
+                        <tr>
+                            <td>Bessemer</td>
+                            <td>Global</td>
+                            <td>Legacy SaaS Leaders</td>
+                        </tr>
+                        <tr>
+                            <td>Hustle Fund</td>
+                            <td>Seed</td>
+                            <td>Product Focused</td>
+                        </tr>
+                        <tr>
+                            <td>Point Nine</td>
+                            <td>SaaS</td>
+                            <td>Angel/Seed SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Precursor</td>
+                            <td>Pre-Seed</td>
+                            <td>First Money In</td>
+                        </tr>
+                        <tr>
+                            <td>Liquid 2</td>
+                            <td>Seed</td>
+                            <td>Generalist</td>
+                        </tr>
+                        <tr>
+                            <td>RRE Ventures</td>
+                            <td>Early</td>
+                            <td>Software</td>
+                        </tr>
+                        <tr>
+                            <td>Uncork Capital</td>
+                            <td>Seed</td>
+                            <td>Post-Launch SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Seedcamp</td>
+                            <td>EU</td>
+                            <td>European Champions</td>
+                        </tr>
+                        <tr>
+                            <td>CRV</td>
+                            <td>Early</td>
+                            <td>Infra / Consumer</td>
+                        </tr>
+                        <tr>
+                            <td>Tiger Global</td>
+                            <td>Growth</td>
+                            <td>Data-Driven Investing</td>
+                        </tr>
+                        <tr>
+                            <td>Insight Partners</td>
+                            <td>Growth</td>
+                            <td>Software Specialists</td>
+                        </tr>
+                        <tr>
+                            <td>USV</td>
+                            <td>Thesis</td>
+                            <td>Network Effects</td>
+                        </tr>
+                        <tr>
+                            <td>SV Angel</td>
+                            <td>Seed</td>
+                            <td>Founder Focused</td>
+                        </tr>
+                        <tr>
+                            <td>500 Global</td>
+                            <td>Global</td>
+                            <td>Seed / Emerging Mkts</td>
+                        </tr>
+                        <tr>
+                            <td>Felicis</td>
+                            <td>Seed+</td>
+                            <td>High Conviction</td>
+                        </tr>
+                        <tr>
+                            <td>Lux Capital</td>
+                            <td>Deep</td>
+                            <td>SaaS / Infra</td>
+                        </tr>
+                        <tr>
+                            <td>Bain Capital</td>
+                            <td>SaaS</td>
+                            <td>Growth/Enterprise</td>
+                        </tr>
+                        <tr>
+                            <td>GV</td>
+                            <td>Global</td>
+                            <td>Innovation Scaling</td>
+                        </tr>
+                        <tr>
+                            <td>Northzone</td>
+                            <td>EU/US</td>
+                            <td>Consumer / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Redpoint</td>
+                            <td>Venture</td>
+                            <td>Foundry/Seed</td>
+                        </tr>
+                        <tr>
+                            <td>DN Capital</td>
+                            <td>Early</td>
+                            <td>Marketplaces / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Atlanta Ventures</td>
+                            <td>Studio</td>
+                            <td>SaaS Native</td>
+                        </tr>
+                        <tr>
+                            <td>M25</td>
+                            <td>Seed</td>
+                            <td>Mid-Market Growth</td>
+                        </tr>
+                        <tr>
+                            <td>Halogen</td>
+                            <td>Diversity</td>
+                            <td>SaaS & Web3</td>
+                        </tr>
+                        <tr>
+                            <td>Saban</td>
+                            <td>Media/IT</td>
+                            <td>Global Distribution</td>
+                        </tr>
+                        <tr>
+                            <td>Connetic</td>
+                            <td>Data</td>
+                            <td>Algorithm Driven</td>
+                        </tr>
+                        <tr>
+                            <td>Genacast</td>
+                            <td>Infra</td>
+                            <td>B2B Innovation</td>
+                        </tr>
+                        <tr>
+                            <td>Boost VC</td>
+                            <td>Deep</td>
+                            <td>Crypto / AI / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>General Catalyst</td>
+                            <td>T1</td>
+                            <td>Consumer/B2B</td>
+                        </tr>
+                        <tr>
+                            <td>Canaan</td>
+                            <td>Early</td>
+                            <td>Fintech / SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>IVP</td>
+                            <td>Growth</td>
+                            <td>Late Stage SaaS</td>
+                        </tr>
+                        <tr>
+                            <td>Spark Capital</td>
+                            <td>Global</td>
+                            <td>Creative/Tech</td>
+                        </tr>
+                        <tr>
+                            <td>Initialized</td>
+                            <td>Seed</td>
+                            <td>Engineering Led</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="footer">
+            <span>© 2025 Velodesk</span>
+            <span>Confidential Project Velocity Strategy</span>
+        </div>
+    </div>
+</body>
+
+</html>
