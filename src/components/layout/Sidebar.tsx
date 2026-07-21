@@ -53,6 +53,16 @@ export function Sidebar() {
             ]
         },
         {
+            title: 'ESRE AI Engine',
+            items: [
+                { name: 'Dashboard', href: '/esre-engine', icon: Zap },
+                { name: 'Lens (Intake)', href: '/esre-engine/lens', icon: Activity },
+                { name: 'Document Intelligence', href: '/esre-engine/document-intelligence', icon: FileText },
+                { name: 'Prescription Library', href: '/esre-engine/prescription-library', icon: BookOpen },
+                { name: 'ESRE Monitor', href: '/esre-engine/monitor', icon: ShieldAlert },
+            ]
+        },
+        {
             title: 'Intelligence & IP',
             items: [
                 { name: 'Knowledge Base', href: '/knowledgebase', icon: BookOpen },
