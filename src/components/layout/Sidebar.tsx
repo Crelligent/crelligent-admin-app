@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { 
     LayoutDashboard, 
     BarChart2, 
@@ -22,7 +22,8 @@ import {
     Archive,
     Calendar,
     Activity,
-    Target
+    Target,
+    LogOut
 } from 'lucide-react'
 
 export function Sidebar() {
@@ -118,12 +119,24 @@ export function Sidebar() {
             </div>
             
             <div className="p-4 border-t border-white/10 shrink-0 sticky bottom-0 bg-[#050505]">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-white/10" />
-                    <div>
-                        <div className="text-sm font-medium">System Admin</div>
-                        <div className="text-xs text-white/40">admin@crelligent.com</div>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-white/10" />
+                        <div>
+                            <div className="text-sm font-medium">System Admin</div>
+                            <div className="text-xs text-white/40">admin@crelligent.com</div>
+                        </div>
                     </div>
+                    <button 
+                        onClick={() => {
+                            document.cookie = "admin_auth=; path=/; max-age=0";
+                            window.location.href = '/login';
+                        }}
+                        className="p-2 text-white/40 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                        title="Sign Out"
+                    >
+                        <LogOut className="w-4 h-4" />
+                    </button>
                 </div>
             </div>
         </aside>

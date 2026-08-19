@@ -21,6 +21,7 @@ export default function AdminLoginPage() {
         // Mock login for now, would integrate with actual Supabase client
         setTimeout(() => {
             if (email === 'admin@crelligent.com' || email.includes('@crelligent.com')) {
+                document.cookie = "admin_auth=true; path=/; max-age=86400"; // 24 hours
                 router.push('/')
             } else {
                 setError('Unauthorized credentials. This incident has been logged.')
