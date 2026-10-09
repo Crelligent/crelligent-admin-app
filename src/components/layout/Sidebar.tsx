@@ -3,11 +3,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { 
-    LayoutDashboard, 
-    BarChart2, 
-    BookOpen, 
-    Briefcase, 
+import {
+    LayoutDashboard,
+    BarChart2,
+    BookOpen,
+    Briefcase,
     Server,
     Shield,
     Users,
@@ -23,6 +23,7 @@ import {
     Calendar,
     Activity,
     Target,
+    Send,
     LogOut
 } from 'lucide-react'
 
@@ -45,6 +46,7 @@ export function Sidebar() {
             title: 'Operations & Execution',
             items: [
                 { name: 'Leads Inbox', href: '/leads', icon: Target },
+                { name: 'Outreach CRM', href: '/outreach', icon: Send },
                 { name: 'Clients', href: '/clients', icon: Users },
                 { name: 'Implementation Arm', href: '/engagements', icon: Briefcase },
                 { name: 'Managed Services', href: '/commercial', icon: Server },
@@ -103,8 +105,8 @@ export function Sidebar() {
                                         key={item.href}
                                         href={item.href}
                                         className={`flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors ${
-                                            isActive 
-                                                ? 'bg-white/10 text-white font-medium' 
+                                            isActive
+                                                ? 'bg-white/10 text-white font-medium'
                                                 : 'text-white/60 hover:text-white hover:bg-white/5'
                                         }`}
                                     >
@@ -117,7 +119,7 @@ export function Sidebar() {
                     </div>
                 ))}
             </div>
-            
+
             <div className="p-4 border-t border-white/10 shrink-0 sticky bottom-0 bg-[#050505]">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -127,7 +129,7 @@ export function Sidebar() {
                             <div className="text-xs text-white/40">admin@crelligent.com</div>
                         </div>
                     </div>
-                    <button 
+                    <button
                         onClick={() => {
                             document.cookie = "admin_auth=; path=/; max-age=0";
                             window.location.href = '/login';
