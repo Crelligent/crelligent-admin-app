@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Apply middleware to all routes except api, _next static files, images, icons
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|icon.png|.*\\.svg$).*)'],
+  // Apply middleware to all routes except api, public email images (/email/*), _next static files, images, icons
+  matcher: ['/((?!api|email/|_next/static|_next/image|favicon.ico|icon.png|.*\\.svg$).*)'],
 }
 
