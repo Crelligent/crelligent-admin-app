@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       const contactsWithEmail = insertedContacts.filter(c => c.email)
 
       // Call our own send-email batch endpoint
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3007'
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3003'
       const emailRes = await fetch(`${baseUrl}/api/send-email`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

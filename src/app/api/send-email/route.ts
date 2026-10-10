@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
+// Trim env values: a stray space or quote pasted into Vercel makes the mail
+// server reject the login with "535 Incorrect authentication data".
+const env = (name: string) => (process.env[name] || '').trim().replace(/^["']|["']$/g, '')
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
+  host: env('SMTP_HOST'),
+  port: parseInt(env('SMTP_PORT') || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: env('SMTP_USER'),
+    pass: env('SMTP_PASS'),
   },
   tls: { rejectUnauthorized: false },
 })
@@ -50,7 +54,7 @@ function buildEmailHtml(firstName: string, company: string, segment: string): st
   <p>You can reply directly to this email or pick a time that works for you.</p>
 
   <div class="sig">
-    <strong>Uche Eze</strong><br>
+    <strong>Uche Igboanugo</strong><br>
     Founder & CEO, Crelligent & Company<br>
     <a href="https://crelligent.com">crelligent.com</a> · Lagos, Nigeria
   </div>
@@ -73,7 +77,7 @@ export async function POST(request: NextRequest) {
     const html = buildEmailHtml(firstName || '', companyName, segment || 'International Founders')
 
     await transporter.sendMail({
-      from: `"Uche | Crelligent" <${process.env.SMTP_FROM}>`,
+      from: `"Uche | Crelligent" <${env('SMTP_FROM')}>`,
       to,
       subject,
       html,
@@ -106,7 +110,7 @@ export async function PUT(request: NextRequest) {
         const html = buildEmailHtml(contact.first_name || '', companyName, contact.segment || 'International Founders')
 
         await transporter.sendMail({
-          from: `"Uche | Crelligent" <${process.env.SMTP_FROM}>`,
+          from: `"Uche | Crelligent" <${env('SMTP_FROM')}>`,
           to: contact.email,
           subject,
           html,
