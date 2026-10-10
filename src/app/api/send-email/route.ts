@@ -16,51 +16,63 @@ const transporter = nodemailer.createTransport({
   tls: { rejectUnauthorized: false },
 })
 
-function buildEmailHtml(firstName: string, company: string, segment: string): string {
+const FROM = () => `"Uche from Velodesk" <${env('SMTP_FROM')}>`
+const VELODESK_URL = 'https://velodesk.crelligent.com/?utm_source=outreach&utm_medium=email&utm_campaign=founder_cold'
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
+// Velodesk cold email for early-stage founders.
+// Kept deliberately plain: it should read like a personal note, not a newsletter,
+// so it lands in Primary and gets replies. One link, no images.
+function buildEmail(firstNameRaw: string, companyRaw: string, segment: string) {
+  const firstName = (firstNameRaw || '').trim()
+  const company = (companyRaw || '').trim()
+  const hasCompany = company.length > 0 && company.toLowerCase() !== 'your company'
+  const co = hasCompany ? company : 'your startup'
   const isNigerian = segment === 'Nigerian Founders'
+  const payments = isNigerian ? 'Paystack or Stripe' : 'Stripe or Paystack'
 
-  const opener = isNigerian
-    ? `I came across ${company || 'your company'} and wanted to reach out directly — founder to founder.`
-    : `I came across ${company || 'your company'} and wanted to introduce Crelligent.`
+  const subject = hasCompany ? `What's ${company}'s PMF score?` : `What's your startup's PMF score?`
 
-  const context = isNigerian
-    ? `We work specifically with Nigerian and West African founders to build the systems infrastructure that lets them compete globally — the kind of operational and data intelligence backbone that separates companies that scale from those that stall.`
-    : `We work with ambitious founders across Africa and internationally to build the systems intelligence backbone that separates companies that scale from those that stall — the intersection of McKinsey-level strategy and Palantir-level data engineering.`
+  const paragraphs = [
+    `Hi ${firstName || 'there'},`,
+    `Quick question: if an investor asked you tomorrow to prove ${co} has product-market fit, with data rather than the pitch, what would you show them?`,
+    `Most early-stage founders I speak with have real traction but no single, credible way to show it. That's why we built Velodesk.`,
+    `Velodesk connects to ${payments} and turns your real revenue and retention data into a PMF Score from 0 to 100: the evidence investors look for, in one link you can share before you raise.`,
+    `See how it works (14-day free trial): LINK`,
+    `If it's useful, I'm happy to walk you through ${co}'s score myself. Just reply to this email.`,
+  ]
+  const ps = `P.S. If ${co} isn't raising in the next 12 months, reply "not now" and I won't follow up.`
 
-  return `
-<!DOCTYPE html>
+  const text = [
+    ...paragraphs.map(p => p.replace('LINK', 'velodesk.crelligent.com')),
+    'Uche Igboanugo\nFounder, Velodesk · Crelligent & Company\nLagos, Nigeria',
+    ps,
+  ].join('\n\n')
+
+  const link = `<a href="${VELODESK_URL}" style="color:#15803d;font-weight:600;">velodesk.crelligent.com</a>`
+  const htmlParas = paragraphs
+    .map(p => escapeHtml(p).replace('LINK', link))
+    .map(p => `<p style="margin:0 0 16px;">${p}</p>`)
+    .join('\n    ')
+
+  const html = `<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 560px; margin: 0 auto; padding: 32px 16px; }
-    p { margin: 0 0 16px; }
-    .sig { margin-top: 32px; border-top: 1px solid #e5e5e5; padding-top: 20px; color: #555; font-size: 14px; }
-    .sig strong { color: #1a1a1a; }
-    a { color: #7B61FF; }
-  </style>
-</head>
-<body>
-  <p>Hi ${firstName || 'there'},</p>
-
-  <p>${opener}</p>
-
-  <p>${context}</p>
-
-  <p>Most early-stage companies I speak with are sitting on fragmented data, manual processes, and hidden system debt that quietly limits growth. We run a structured diagnostic — the <strong>ESRE Framework</strong> — to identify exactly where the system is leaking and what to do about it.</p>
-
-  <p>Would a 20-minute call make sense? No pitch — just a genuine conversation about where you're taking the company and whether there's a real fit.</p>
-
-  <p>You can reply directly to this email or pick a time that works for you.</p>
-
-  <div class="sig">
-    <strong>Uche Igboanugo</strong><br>
-    Founder & CEO, Crelligent & Company<br>
-    <a href="https://crelligent.com">crelligent.com</a> · Lagos, Nigeria
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;padding:24px 16px;background:#ffffff;">
+  <div style="max-width:560px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;">
+    ${htmlParas}
+    <p style="margin:24px 0 0;color:#1a1a1a;">
+      <strong>Uche Igboanugo</strong><br>
+      <span style="color:#555;">Founder, Velodesk · Crelligent &amp; Company<br>Lagos, Nigeria</span>
+    </p>
+    <p style="margin:24px 0 0;color:#555;font-size:13px;">${escapeHtml(ps)}</p>
   </div>
 </body>
-</html>
-`
+</html>`
+
+  return { subject, html, text }
 }
 
 export async function POST(request: NextRequest) {
@@ -72,18 +84,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing recipient email' }, { status: 400 })
     }
 
-    const companyName = company || 'your company'
-    const subject = `${companyName} × Crelligent — Systems Intelligence for Founders`
-    const html = buildEmailHtml(firstName || '', companyName, segment || 'International Founders')
+    const { subject, html, text } = buildEmail(firstName || '', company || '', segment || 'International Founders')
 
-    await transporter.sendMail({
-      from: `"Uche | Crelligent" <${env('SMTP_FROM')}>`,
-      to,
-      subject,
-      html,
-    })
+    await transporter.sendMail({ from: FROM(), to, replyTo: env('SMTP_FROM'), subject, html, text })
 
-    return NextResponse.json({ success: true, to, contactId })
+    return NextResponse.json({ success: true, to, contactId, subject })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error'
     console.error('[send-email] SMTP error:', message)
@@ -91,7 +96,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Batch send — POST /api/send-email/batch with { contactIds: string[] }
+// Batch send — PUT /api/send-email with { contacts: [...] }
 export async function PUT(request: NextRequest) {
   try {
     const { contacts } = await request.json() as {
@@ -105,16 +110,12 @@ export async function PUT(request: NextRequest) {
         continue
       }
       try {
-        const companyName = contact.company || 'your company'
-        const subject = `${companyName} × Crelligent — Systems Intelligence for Founders`
-        const html = buildEmailHtml(contact.first_name || '', companyName, contact.segment || 'International Founders')
-
-        await transporter.sendMail({
-          from: `"Uche | Crelligent" <${env('SMTP_FROM')}>`,
-          to: contact.email,
-          subject,
-          html,
-        })
+        const { subject, html, text } = buildEmail(
+          contact.first_name || '',
+          contact.company || '',
+          contact.segment || 'International Founders'
+        )
+        await transporter.sendMail({ from: FROM(), to: contact.email, replyTo: env('SMTP_FROM'), subject, html, text })
         results.push({ id: contact.id, success: true })
         // Small delay between sends to avoid SMTP rate limits
         await new Promise(r => setTimeout(r, 500))
