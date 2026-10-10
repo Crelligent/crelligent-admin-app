@@ -67,6 +67,41 @@ function buildEmail(firstNameRaw: string, companyRaw: string, segment: string) {
               </td>
             </tr>`
 
+  // How the PMF Score is built (weights mirror velodesk-app src/lib/pmf-score.ts)
+  const SIGNALS: [string, number, string][] = [
+    ['Retention', 25, 'Do customers stay?'],
+    ['Revenue growth', 20, 'Is revenue compounding?'],
+    ['Customer satisfaction', 15, 'NPS and CSAT from real customers'],
+    ['Engagement', 15, 'How often they actually use it'],
+    ['Time to value', 10, 'How fast new users get the payoff'],
+    ['Expansion', 10, 'Do customers pay more over time?'],
+    ['Referrals', 5, 'Do they bring others?'],
+  ]
+  const bar = (label: string, pct: number, hint: string) => `
+            <tr>
+              <td style="padding:6px 0;font-family:${FONT};font-size:13px;line-height:1.35;color:${C.text};" width="46%"><strong style="color:${C.ink};">${label}</strong><br><span style="font-size:12px;color:${C.muted};">${hint}</span></td>
+              <td style="padding:6px 0 6px 10px;" valign="middle">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td width="${pct * 4}%" style="height:8px;line-height:8px;font-size:0;background:${C.green};border-radius:4px;">&nbsp;</td>
+                  <td style="height:8px;line-height:8px;font-size:0;">&nbsp;</td>
+                </tr></table>
+              </td>
+              <td width="40" align="right" style="padding:6px 0;font-family:${FONT};font-size:13px;font-weight:700;color:${C.ink};">${pct}%</td>
+            </tr>`
+
+  // Integrations that sync today (velodesk-app src/lib/integrations/registry.ts)
+  const TOOL_GROUPS: [string, string][] = [
+    ['Payments', 'Stripe, Paystack, Chargebee, Paddle'],
+    ['Product analytics', 'Mixpanel, Amplitude, PostHog'],
+    ['CRM', 'HubSpot, Pipedrive, Close'],
+    ['Customer voice', 'Intercom, Zendesk, Typeform, Canny'],
+  ]
+  const toolRow = (group: string, tools: string) => `
+            <tr>
+              <td valign="top" width="34%" style="padding:7px 10px 7px 0;font-family:${FONT};font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:${C.greenDark};">${group}</td>
+              <td valign="top" style="padding:7px 0;font-family:${FONT};font-size:14px;line-height:1.5;color:${C.text};">${tools}</td>
+            </tr>`
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,9 +156,28 @@ function buildEmail(firstNameRaw: string, companyRaw: string, segment: string) {
 
         <!-- How it works -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 12px;">
-${step(1, 'Connect the tools you already use', `Starting with ${escapeHtml(payments)}. Read-only access, a few minutes to set up.`)}
+${step(1, 'Connect the tools you already use', `${escapeHtml(payments)}, your analytics, CRM and support tools. Read-only access, a few minutes to set up.`)}
 ${step(2, 'Get your PMF Score', 'Built from how customers actually stay, pay and grow.')}
 ${step(3, 'Share it with investors', 'One link with the evidence behind your traction.')}
+        </table>
+
+        <!-- Integrations -->
+        <p style="margin:18px 0 6px;font-family:${FONT};font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${C.greenDark};">Works with the tools you already use</p>
+        <p style="margin:0 0 8px;font-family:${FONT};font-size:14px;line-height:1.6;color:${C.muted};">14 integrations live today, with Google Analytics, Salesforce, QuickBooks, Xero and Ramp on the way.</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;border-top:1px solid ${C.line};border-bottom:1px solid ${C.line};">
+${TOOL_GROUPS.map(([g, t]) => toolRow(g, t)).join('')}
+        </table>
+
+        <!-- How the score works -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;">
+          <tr><td style="background:#FAFAFA;border:1px solid ${C.line};border-radius:10px;padding:20px 22px;">
+            <p style="margin:0 0 6px;font-family:${FONT};font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${C.greenDark};">How your PMF Score is calculated</p>
+            <p style="margin:0 0 12px;font-family:${FONT};font-size:14px;line-height:1.6;color:${C.text};">Velodesk reads seven signals from your connected tools, rates each from 0 to 100, and weights them by how much investors care about them:</p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+${SIGNALS.map(([l, p, h]) => bar(l, p, h)).join('')}
+            </table>
+            <p style="margin:12px 0 0;font-family:${FONT};font-size:13px;line-height:1.6;color:${C.muted};">Anything your tools can't measure is left out, never guessed, and the report shows exactly which data each number came from. <strong style="color:${C.ink};">80+</strong> is strong PMF, <strong style="color:${C.ink};">60&ndash;79</strong> emerging, <strong style="color:${C.ink};">40&ndash;59</strong> still searching.</p>
+          </td></tr>
         </table>
 
         <!-- CTA -->
@@ -189,7 +243,9 @@ ${step(3, 'Share it with investors', 'One link with the evidence behind your tra
     `Quick question: if an investor asked you tomorrow to prove ${co} has product-market fit, with data rather than the pitch, what would you show them?`,
     `WHAT IS PRODUCT-MARKET FIT (PMF)?\nIt's the point where your product meets strong, real demand: customers keep using it, pay for it and tell others about it, without you having to push.\n\nWhy it matters: it's the first thing serious investors test. Before your vision or your team, they want proof that customers stay, pay more over time and arrive on their own. Without it, founders hear "come back when you have more traction."`,
     `Most early-stage founders I speak with have real traction but no single, credible way to show it. That's why we built Velodesk: it turns your real revenue and retention data into a PMF Score from 0 to 100, the evidence investors look for, in one link you can share before you raise.`,
-    `How it works:\n1. Connect the tools you already use, starting with ${payments} (read-only, a few minutes)\n2. Get your PMF Score\n3. Share it with investors`,
+    `How it works:\n1. Connect the tools you already use: ${payments}, your analytics, CRM and support tools (read-only, a few minutes)\n2. Get your PMF Score\n3. Share it with investors`,
+    `WORKS WITH THE TOOLS YOU ALREADY USE\n14 integrations live today, with Google Analytics, Salesforce, QuickBooks, Xero and Ramp on the way.\n${TOOL_GROUPS.map(([g, t]) => `- ${g}: ${t}`).join('\n')}`,
+    `HOW YOUR PMF SCORE IS CALCULATED\nVelodesk reads seven signals from your connected tools, rates each from 0 to 100, and weights them by how much investors care about them:\n${SIGNALS.map(([l, p, h]) => `- ${l} (${p}%): ${h}`).join('\n')}\nAnything your tools can't measure is left out, never guessed, and the report shows exactly which data each number came from. 80+ is strong PMF, 60-79 emerging, 40-59 still searching.`,
     `See how it works (14-day free trial): velodesk.crelligent.com`,
     `If it's useful, I'm happy to walk you through ${co}'s score myself. Just reply to this email.`,
     `Uche Igboanugo\nFounder, Velodesk · Crelligent & Company\nvelodesk.crelligent.com | uche@crelligent.com | Lagos, Nigeria`,
