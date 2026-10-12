@@ -8,7 +8,12 @@ import nodemailer from 'nodemailer'
 // server reject the login with "535 Incorrect authentication data".
 export const env = (name: string) => (process.env[name] || '').trim().replace(/^["']|["']$/g, '')
 
+// One pooled SMTP connection for the whole run: logging in once instead of per email
+// cuts each send from ~5s to ~1s, so a single morning run can reach every queue.
 export const transporter = nodemailer.createTransport({
+  pool: true,
+  maxConnections: 1,
+  maxMessages: 200,
   host: env('SMTP_HOST'),
   port: parseInt(env('SMTP_PORT') || '587'),
   secure: false,

@@ -127,6 +127,9 @@ function senderFor(template: TrackTemplate) {
   if (user && pass) {
     if (!transports.has(key)) {
       transports.set(key, nodemailer.createTransport({
+        pool: true,
+        maxConnections: 1,
+        maxMessages: 200,
         host: env('SMTP_HOST'),
         port: parseInt(env('SMTP_PORT') || '587'),
         secure: false,
